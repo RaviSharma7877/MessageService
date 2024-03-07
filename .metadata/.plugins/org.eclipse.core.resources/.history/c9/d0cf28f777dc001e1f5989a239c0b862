@@ -1,0 +1,36 @@
+package com.NotifEaze.NotifEaze.controller;
+
+import com.NotifEaze.NotifEaze.dto.BaseEmailResponse;
+import com.NotifEaze.NotifEaze.dto.BasePushNotificationResponse;
+import com.NotifEaze.NotifEaze.dto.BaseSmsResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/communication")
+public class CommunicationController {
+
+    @PostMapping("/send-sms")
+    public ResponseEntity<BaseSmsResponse> sendSms(@RequestBody String message) {
+        // Implement logic to send SMS
+        BaseSmsResponse response = new BaseSmsResponse(true, "SMS sent successfully");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/send-email")
+    public ResponseEntity<BaseEmailResponse> sendEmail(@RequestBody String message) {
+        // Implement logic to send email
+        BaseEmailResponse response = new BaseEmailResponse(true, "Email sent successfully");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/send-notification")
+    public ResponseEntity<BasePushNotificationResponse> sendNotification(@RequestBody String message) {
+        // Implement logic to send push notification
+        BasePushNotificationResponse response = new BasePushNotificationResponse(true, "Push notification sent successfully");
+        return ResponseEntity.ok(response);
+    }
+}

@@ -1,0 +1,50 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.NotifEaze.NotifEaze.dto.BaseSmsResponse;
+import com.NotifEaze.NotifEaze.dto.SmsDeliveryStatus;
+import com.NotifEaze.NotifEaze.mock.GupshupMock;
+import com.NotifEaze.NotifEaze.mock.KayleraMock;
+import com.NotifEaze.NotifEaze.service.SmsService;
+
+@Service
+public class SmsServiceImpl implements SmsService {
+
+    @Value("${notification.service.provider}")
+    private String serviceProvider;
+
+    @Override
+    public BaseSmsResponse sendSms(String phoneNumber, String message) {
+        if ("Gupshup".equalsIgnoreCase(serviceProvider)) {
+            GupshupMock gupshupMock = new GupshupMock();
+            gupshupMock.sendSms(phoneNumber, message);
+            return new BaseSmsResponse(true, "SMS sent successfully");
+        } else if ("Kaylera".equalsIgnoreCase(serviceProvider)) {
+            KayleraMock kayleraMock = new KayleraMock();
+            kayleraMock.sendSms(phoneNumber, message);
+            return new BaseSmsResponse(true, "SMS sent successfully");
+        } else {
+            return new BaseSmsResponse(false, "Invalid service provider");
+        }
+    }
+
+    @Override
+    public SmsDeliveryStatus checkDeliveryStatus(String messageId) {
+        if ("Gupshup".equalsIgnoreCase(serviceProvider)) {
+            GupshupMock gupshupMock = new GupshupMock();
+            String response = gupshupMock.getResponseForSms(messageId);
+            // Parse the response and return delivery status
+            return new SmsDeliveryStatus(true, "SMS delivered successfully");
+        } else if ("Kaylera".equalsIgnoreCase(serviceProvider)) {
+            KayleraMock kayleraMock = new KayleraMock();
+            String response = kayleraMock.getResponseForSms(messageId);
+            // Parse the response and return delivery status
+            return new SmsDeliveryStatus(false, "SMS delivery failed");
+        } else {
+            return new SmsDeliveryStatus(false, "Invalid service provider");
+        }
+    }
+}

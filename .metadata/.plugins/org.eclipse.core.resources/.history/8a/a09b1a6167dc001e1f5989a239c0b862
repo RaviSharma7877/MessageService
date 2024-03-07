@@ -1,0 +1,31 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import com.NotifEaze.NotifEaze.dto.BaseEmailResponse;
+import com.NotifEaze.NotifEaze.service.EmailService;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+
+public class EmailServiceImpl implements EmailService {
+    @Override
+    public BaseEmailResponse sendEmail(String to, String subject, String body) {
+        try {
+            HtmlEmail email = new HtmlEmail();
+            email.setHostName("smtp.gmail.com");
+            email.setSmtpPort(587);
+            email.setStartTLSEnabled(true);
+            email.setAuthentication("sraa7877@gmail.com", "ravi7877173859");
+            email.setFrom("sraa7877@gmail.com");
+            email.addTo(to);
+            email.setSubject(subject);
+            email.setHtmlMsg(body);
+
+            email.send();
+
+            return new BaseEmailResponse(true, "Email sent successfully");
+        } catch (EmailException e) {
+            e.printStackTrace();
+            return new BaseEmailResponse(false, "Failed to send email: " + e.getMessage());
+        }
+    }
+}
+

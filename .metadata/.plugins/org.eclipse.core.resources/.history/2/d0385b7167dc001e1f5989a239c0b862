@@ -1,0 +1,47 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import com.NotifEaze.NotifEaze.dto.BaseEmailResponse;
+import com.NotifEaze.NotifEaze.service.EmailService;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
+public class EmailServiceImpl implements EmailService {
+
+    private static final String EMAIL_USERNAME = "your_email@example.com";
+    private static final String EMAIL_PASSWORD = "your_email_password";
+
+    @Override
+    public BaseEmailResponse sendEmail(String to, String subject, String body) {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.example.com"); // Use your SMTP server host
+        props.put("mail.smtp.port", "587"); // Use your SMTP server port
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(EMAIL_USERNAME, EMAIL_PASSWORD);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(EMAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(body);
+
+            Transport.send(message);
+
+            return new BaseEmailResponse(true, "Email sent successfully");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return new BaseEmailResponse(false, "Failed to send email");
+        }
+    }
+}
+
+

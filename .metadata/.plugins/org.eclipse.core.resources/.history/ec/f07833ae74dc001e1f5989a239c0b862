@@ -1,0 +1,30 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import com.NotifEaze.NotifEaze.dto.BaseEmailResponse;
+import com.NotifEaze.NotifEaze.mock.GupshupMock;
+import com.NotifEaze.NotifEaze.mock.KayleraMock;
+import com.NotifEaze.NotifEaze.service.EmailService;
+
+public class EmailServiceImpl implements EmailService {
+	@Value("${notification.service.provider}")
+    private String serviceProvider;
+
+    @Override
+    public BaseEmailResponse sendEmail(String to, String subject, String body) {
+        if ("Gupshup".equalsIgnoreCase(serviceProvider)) {
+            GupshupMock gupshupMock = new GupshupMock();
+            gupshupMock.sendEmail(to, subject, body);
+            return new BaseEmailResponse(true, "Email sent successfully");
+        } else if ("Kaylera".equalsIgnoreCase(serviceProvider)) {
+            KayleraMock kayleraMock = new KayleraMock();
+            kayleraMock.sendEmail(to, subject, body);
+            return new BaseEmailResponse(true, "Email sent successfully");
+        } else {
+            return new BaseEmailResponse(false, "Invalid service provider");
+        }
+    }
+}
+
+

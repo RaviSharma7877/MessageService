@@ -1,0 +1,53 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.NotifEaze.NotifEaze.dto.BaseSmsResponse;
+import com.NotifEaze.NotifEaze.dto.SmsDeliveryStatus;
+import com.NotifEaze.NotifEaze.service.SmsService;
+
+public class SmsServiceImpl implements SmsService {
+
+	private Map<String, SmsDeliveryStatus> deliveryStatusMap = new HashMap<>();
+
+    @Override
+    public BaseSmsResponse sendSms(String phoneNumber, String message) {
+        // Simulate sending SMS
+        boolean success = sendSmsMessage(phoneNumber, message);
+
+        // Return response based on success status
+        if (success) {
+            return new BaseSmsResponse(true, "SMS sent successfully");
+        } else {
+            return new BaseSmsResponse(false, "Failed to send SMS");
+        }
+    }
+
+    @Override
+    public SmsDeliveryStatus checkDeliveryStatus(String messageId) {
+        // Check delivery status from map
+        return deliveryStatusMap.getOrDefault(messageId, new SmsDeliveryStatus(false, "Message not found"));
+    }
+
+    // Simulate sending SMS
+    private boolean sendSmsMessage(String phoneNumber, String message) {
+        // Implement your logic here to simulate sending an SMS
+        // For example, you can log the phoneNumber and message
+        System.out.println("Sending SMS to " + phoneNumber + ": " + message);
+
+        // Generate a random message ID for tracking delivery status
+        String messageId = generateMessageId();
+
+        // Simulate delivery status (assuming all messages are delivered successfully)
+        deliveryStatusMap.put(messageId, new SmsDeliveryStatus(true, "Message delivered"));
+
+        return true;
+    }
+
+    // Generate a random message ID
+    private String generateMessageId() {
+        return String.valueOf(System.currentTimeMillis());
+    }
+
+}

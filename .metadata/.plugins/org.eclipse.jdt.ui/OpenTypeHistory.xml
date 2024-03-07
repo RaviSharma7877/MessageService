@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+    <typeInfo handle="=NotifEaze/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.NotifEaze.NotifEaze.service{EmailService.java[EmailService" modifiers="513" timestamp="1709801677097"/>
+    <typeInfo handle="=NotifEaze/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.NotifEaze.NotifEaze.service{PushNotificationService.java[PushNotificationService" modifiers="513" timestamp="1709801677065"/>
+    <typeInfo handle="=NotifEaze/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.NotifEaze.NotifEaze.service{SmsService.java[SmsService" modifiers="513" timestamp="1709801677032"/>
+</typeInfoHistroy>

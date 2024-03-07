@@ -1,0 +1,29 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import com.NotifEaze.NotifEaze.dto.BasePushNotificationResponse;
+import com.NotifEaze.NotifEaze.service.PushNotificationService;
+
+public class PushNotificationServiceImpl implements PushNotificationService {
+
+	@Override
+	public BasePushNotificationResponse sendNotification(String fcmToken, String message) {
+		boolean success = sendPushNotification(fcmToken, message);
+
+        if (success) {
+            return new BasePushNotificationResponse(true, "Push notification sent successfully");
+        } else {
+            return new BasePushNotificationResponse(false, "Failed to send push notification");
+        }
+	}
+	
+	private boolean sendPushNotification(String fcmToken, String message) {
+        // Implement your logic here to simulate sending a push notification
+        // For example, you can log the message and token
+        System.out.println("Sending push notification to token: " + fcmToken);
+        System.out.println("Message: " + message);
+
+        // Return true for success, false for failure
+        return true;
+    }
+
+}

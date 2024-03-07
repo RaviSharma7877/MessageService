@@ -1,0 +1,31 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import com.NotifEaze.NotifEaze.dto.BaseSmsResponse;
+import com.NotifEaze.NotifEaze.dto.SmsDeliveryStatus;
+import com.NotifEaze.NotifEaze.mock.GupshupMock;
+import com.NotifEaze.NotifEaze.service.SmsService;
+
+public class SmsServiceImpl implements SmsService {
+
+    @Override
+    public BaseSmsResponse sendSms(String phoneNumber, String message) {
+        // Simulate sending SMS using GupshupMock
+        // You can replace this with actual SMS sending logic using a real SMS service
+        if (GupshupMock.SMS_MOCKED_RESPONSES.containsKey(phoneNumber)) {
+            return new BaseSmsResponse(true, "SMS sent successfully");
+        } else {
+            return new BaseSmsResponse(false, "Failed to send SMS");
+        }
+    }
+
+    @Override
+    public SmsDeliveryStatus checkDeliveryStatus(String messageId) {
+        // Simulate checking SMS delivery status using GupshupMock
+        // You can replace this with actual SMS delivery status checking logic using a real SMS service
+        if (GupshupMock.SMS_DELIVERY_STATUS_MOCKED_RESPONSES.containsKey(messageId)) {
+            return new SmsDeliveryStatus(true, "SMS delivered successfully");
+        } else {
+            return new SmsDeliveryStatus(false, "SMS not delivered");
+        }
+    }
+}

@@ -1,0 +1,31 @@
+package com.NotifEaze.NotifEaze.service.impl;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.NotifEaze.NotifEaze.dto.BasePushNotificationResponse;
+import com.NotifEaze.NotifEaze.mock.GupshupMock;
+import com.NotifEaze.NotifEaze.mock.KayleraMock;
+import com.NotifEaze.NotifEaze.service.PushNotificationService;
+
+@Service
+public class PushNotificationServiceImpl implements PushNotificationService {
+
+	@Value("${notification.service.provider}")
+    private String serviceProvider;
+
+    @Override
+    public BasePushNotificationResponse sendNotification(String fcmToken, String message) {
+        if ("Gupshup".equalsIgnoreCase(serviceProvider)) {
+            GupshupMock gupshupMock = new GupshupMock();
+            gupshupMock.sendPushNotification(fcmToken, message);
+            return new BasePushNotificationResponse(true, "Push notification sent successfully");
+        } else if ("Kaylera".equalsIgnoreCase(serviceProvider)) {
+            KayleraMock kayleraMock = new KayleraMock();
+            kayleraMock.sendPushNotification(fcmToken, message);
+            return new BasePushNotificationResponse(true, "Push notification sent successfully");
+        } else {
+            return new BasePushNotificationResponse(false, "Invalid service provider");
+        }
+    }
+}
